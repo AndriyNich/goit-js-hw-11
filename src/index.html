@@ -11,21 +11,29 @@
     <section>
       <form id="form" class="search__form">
         <div class="search__header">
-          <input type="text" class="search__input" />
-          <button type="submit" class="search__btn search__btn--top"></button>
+          <input
+            id="search"
+            name="search"
+            type="text"
+            class="search__input"
+            placeholder="Enter type pictures"
+          />
+          <button
+            name="start"
+            type="submit"
+            class="search__btn search__btn--top"
+          ></button>
         </div>
 
         <div class="container gallery"></div>
 
         <div class="search__footer">
-          <button type="submit" class="search__btn search__btn--down"></button>
+          <button type="submit" class="search__btn search__btn--down hidden">
+            Show more
+          </button>
         </div>
       </form>
     </section>
     <script src="./js/index.js" type="module"></script>
   </body>
 </html>
-
-<!-- <input type="text" id="search-box" placeholder="Enter country name" />
-<ul class="country__list"></ul>
-<div class="country__info"></div> -->
