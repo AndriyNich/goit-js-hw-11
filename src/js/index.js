@@ -48,6 +48,7 @@ function onSearch(event) {
 }
 
 function onResult(data) {
+  paintData.clearDataAll();
   const listPicturesInHtmlString = prepareData.getHtmlSring(data);
   paintData.insertDataToEnd(listPicturesInHtmlString);
 }

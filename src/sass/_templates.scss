@@ -1,66 +1,57 @@
-.search__form {
-}
-.search__header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  font-size: 16px;
-  // height: 25px;
-  color: black;
-  background-color: rgb(134, 134, 214);
-}
+$gap: 15px;
+$width-img: calc((1200px - 30px - 3 * $gap) / 4);
+$height-img: calc($width-img / 16 * 9);
+$shadow-card: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
+  1px 4px 6px rgba(0, 0, 0, 0.16);
 
-.search__input {
-  display: block;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  height: 25px;
-  padding: 0 10px;
-  border-top: 1px solid gray;
-  border-bottom: 1px solid gray;
-  border-left: 1px solid gray;
-}
-
-.search__btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(240, 236, 236);
-
-  &--top {
-    height: 25px;
-    width: 35px;
-    background-image: url('../images/search.svg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 16px 16px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
-    border-right: 1px solid gray;
-  }
-
-  &--down {
-    height: 25px;
-    width: 100px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    margin: 0 auto;
-  }
-}
-
-.hidden {
-  display: none;
-}
-
-.search__btn--top .search__btn--down {
-}
-
-.container {
-}
 .gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: $gap;
+  padding: $gap 0;
 }
-.search__footer {
+
+.photo-card {
+  display: flex;
+  flex-direction: column;
+
+  width: $width-img;
+  // height: auto;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: $shadow-card;
+}
+
+.photo__img {
+  width: 100%;
+  height: $height-img;
+  object-fit: cover;
+  object-position: center;
+}
+
+.info {
+  align-self: stretch;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 12px;
+  padding: 5px;
+}
+
+.info__item {
+  width: calc((100% - 3 * $gap) / 4);
+}
+
+.info__title {
+  display: block;
+  width: 100%;
+  font-weight: 700;
+  text-align: center;
+}
+
+.info__data {
+  display: block;
+  width: 100%;
+  text-align: center;
 }
