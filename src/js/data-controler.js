@@ -1,44 +1,64 @@
-import { SearchCountries } from './fetchCountries';
-import { Notification } from './notification';
+import axios from 'axios';
+import Notification from './notification';
 
 const notification = new Notification();
+const ERR_404 =
+  'Sorry, there are no images matching your search query. Please try again.';
 
-export class DataControler {
-  #FIELDS_LIST = ['name', 'capital', 'population', 'languages', 'flags'];
+export default class DataControler {
+  #URL = 'https://pixabay.com/api/';
+  #KEY = 'key=32660703-81d5f2d1cd5893d94cddf879d';
+  #TYPE = 'image_type=photo';
+  #PER_PAGE = 20;
+  #searchLine = '';
+  #page = 0;
   #search;
 
-  constructor() {
-    this.#search = new SearchCountries(this.#FIELDS_LIST);
-  }
+  constructor() {}
 
-  loadData(querySearch) {
-    return this.#search
-      .fetchCountries(querySearch)
-      .then(this.#onResponse)
-      .catch(this.#onCatch);
-  }
+  async loadData(searchLine) {
+    this.#createSearchLine(searchLine);
 
-  #onResponse(data) {
-    if (data.length > 10) {
-      notification.sendNotificationInfo(
-        'Too many matches found. Please enter a more specific name.'
-      );
-      return Promise.resolve([]);
+    try {
+      const result = await axios.get(this.#search);
+
+      this.#sendNotification(result.data.totalHits);
+
+      return Promise.resolve(result);
+    } catch (err) {
+      notification.sendNotificationError(err);
     }
-
-    return Promise.resolve(data);
   }
 
-  #onCatch(error) {
-    if (error.status === 404) {
-      notification.sendNotificationError(
-        'Oops, there is no country with that name.'
-      );
-      return Promise.resolve([]);
+  get page() {
+    return this.#page;
+  }
+
+  set page(newPage) {
+    this.#page = newPage;
+  }
+
+  #sendNotification(cntData) {
+    if (cntData === 0) {
+      notification.sendNotificationError(ERR_404);
     } else {
-      console.log('error - else => ', error);
-
-      return Promise.reject(error);
+      if (this.#page === 1) {
+        notification.sendNotificationSuccess(
+          `Hooray! We found ${cntData} images`
+        );
+      }
     }
+  }
+
+  #createSearchLine(searchLine) {
+    if (this.#searchLine !== searchLine.trim().toLowerCase()) {
+      this.#searchLine = searchLine.trim().toLowerCase();
+      this.#page = 1;
+    } else {
+      this.#page++;
+    }
+
+    this.#search = `${this.#URL}?${this.#KEY}&${this.#TYPE}
+      &page=${this.#page}&per_page=${this.#PER_PAGE}&q=${this.#searchLine}`;
   }
 }
