@@ -13,18 +13,30 @@ const refs = {
   btnMore: document.querySelector('.search__btn--down'),
   search: document.querySelector('.search_input'),
   form: document.querySelector('.search__form'),
+  footer: document.querySelector('footer'),
 };
 
 // new Listener({ selectorSource: '#search-box', callBack: onSearch });
 // document.querySelector(selectorSource).addEventListener('input', callBack);
 refs.form.addEventListener('submit', onSearch);
 
-async function onSearch(event) {
-  event.preventDefault();
-  try {
-    const searchLine = event.target.elements.search.value;
+let searchLine = '';
 
+function onSearch(event) {
+  event.preventDefault();
+
+  searchLine = event.target.elements.search.value;
+
+  onFetch(searchLine);
+}
+
+async function onFetch(searchLine) {
+  try {
     const result = await dataControler.loadData(searchLine);
+
+    if (!result) {
+      return;
+    }
 
     onResult(result.data.hits);
   } catch (err) {
@@ -43,11 +55,22 @@ function onResult(data) {
 window.addEventListener('scroll', onScroll);
 
 function onScroll(event) {
+  const tmp =
+    refs.footer.offsetTop +
+    refs.footer.offsetHeight +
+    document.documentElement.getBoundingClientRect().top -
+    document.documentElement.clientHeight;
+
+  if (tmp < 200) {
+    onFetch(searchLine);
+  }
+
   console.log(
     document.documentElement.getBoundingClientRect().top,
     document.documentElement.getBoundingClientRect().bottom,
     document.documentElement.clientHeight,
-    document.querySelector('footer').offsetTop
+    document.querySelector('footer').offsetTop,
+    tmp
   );
   console.dir(document.querySelector('footer'));
 }

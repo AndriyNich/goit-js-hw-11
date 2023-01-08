@@ -13,16 +13,24 @@ export default class DataControler {
   #searchLine = '';
   #page = 0;
   #search;
+  #isActive = false;
 
   constructor() {}
 
   async loadData(searchLine) {
+    if (this.#isActive) {
+      return false;
+    }
+
     this.#createSearchLine(searchLine);
 
     try {
+      this.#isActive = true;
       const result = await axios.get(this.#search);
 
       this.#sendNotification(result.data.totalHits);
+
+      this.#isActive = false;
 
       return Promise.resolve(result);
     } catch (err) {
