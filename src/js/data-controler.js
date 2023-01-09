@@ -18,18 +18,18 @@ export default class DataControler {
 
   constructor() {}
 
-  resetSearch() {
+  setNewSearch(searchLine) {
     this.#page = 0;
-    this.#searchLine = '';
+    this.#searchLine = searchLine.trim().toLowerCase();
     this.#resetFetchActive();
   }
 
-  async loadData(searchLine) {
+  async loadData() {
     if (this.#isNowFetchActive) {
       return false;
     }
 
-    this.#createSearchLine(searchLine);
+    this.#createSearchLine();
 
     if (!this.#whileNotDataEnd()) {
       return false;
@@ -98,13 +98,8 @@ export default class DataControler {
     }
   }
 
-  #createSearchLine(searchLine) {
-    if (this.#searchLine !== searchLine.trim().toLowerCase()) {
-      this.#searchLine = searchLine.trim().toLowerCase();
-      this.#page = 1;
-    } else {
-      this.#page++;
-    }
+  #createSearchLine() {
+    this.#page++;
 
     this.#search = `${this.#URL}?${this.#KEY}&${this.#TYPE}
       &page=${this.#page}&per_page=${this.#PER_PAGE}&q=${this.#searchLine}`;

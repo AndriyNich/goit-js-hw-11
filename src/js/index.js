@@ -25,14 +25,14 @@ function onSearch(event) {
 
   searchLine = event.target.elements.search.value;
 
-  dataControler.resetSearch();
+  dataControler.setNewSearch(searchLine);
 
-  onFetch(searchLine);
+  onFetch();
 }
 
-async function onFetch(searchLine) {
+async function onFetch() {
   try {
-    const result = await dataControler.loadData(searchLine);
+    const result = await dataControler.loadData();
 
     if (!result) {
       return;
@@ -62,7 +62,7 @@ function onScroll(event) {
     document.documentElement.clientHeight;
 
   if (tmp < 200) {
-    onFetch(searchLine);
+    onFetch();
   }
 
   // console.log(
