@@ -10,30 +10,49 @@ export default class DataControler {
   #KEY = 'key=32660703-81d5f2d1cd5893d94cddf879d';
   #TYPE = 'image_type=photo';
   #PER_PAGE = 20;
+  #totalHits = 0;
   #searchLine = '';
   #page = 0;
   #search;
-  #isActive = false;
+  #isNowFetchActive = false;
 
   constructor() {}
 
+  resetSearch() {
+    this.#page = 0;
+    this.#searchLine = '';
+    this.#resetFetchActive();
+  }
+
   async loadData(searchLine) {
-    if (this.#isActive) {
+    if (this.#isNowFetchActive) {
       return false;
     }
 
     this.#createSearchLine(searchLine);
 
+    if (!this.#whileNotDataEnd()) {
+      return false;
+    }
+
+    return await this.#fetchData();
+  }
+
+  async #fetchData() {
     try {
-      this.#isActive = true;
+      this.#setFetchActive();
+
       const result = await axios.get(this.#search);
 
-      this.#sendNotification(result.data.totalHits);
+      this.#totalHits = result.data.totalHits;
 
-      this.#isActive = false;
+      this.#sendNotification(this.#totalHits);
+
+      this.#resetFetchActive();
 
       return Promise.resolve(result);
     } catch (err) {
+      this.#resetFetchActive();
       notification.sendNotificationError(err);
     }
   }
@@ -44,6 +63,27 @@ export default class DataControler {
 
   set page(newPage) {
     this.#page = newPage;
+  }
+
+  #setFetchActive() {
+    this.#isNowFetchActive = true;
+  }
+
+  #resetFetchActive() {
+    this.#isNowFetchActive = false;
+  }
+
+  #whileNotDataEnd() {
+    if (this.#page <= 1) {
+      return true;
+    }
+
+    if (this.#page * this.#PER_PAGE < this.#totalHits) {
+      return true;
+    }
+
+    notification.sendNotificationInfo('Oops! Data is end.');
+    return false;
   }
 
   #sendNotification(cntData) {

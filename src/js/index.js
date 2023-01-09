@@ -16,8 +16,6 @@ const refs = {
   footer: document.querySelector('footer'),
 };
 
-// new Listener({ selectorSource: '#search-box', callBack: onSearch });
-// document.querySelector(selectorSource).addEventListener('input', callBack);
 refs.form.addEventListener('submit', onSearch);
 
 let searchLine = '';
@@ -26,6 +24,8 @@ function onSearch(event) {
   event.preventDefault();
 
   searchLine = event.target.elements.search.value;
+
+  dataControler.resetSearch();
 
   onFetch(searchLine);
 }
@@ -65,12 +65,12 @@ function onScroll(event) {
     onFetch(searchLine);
   }
 
-  console.log(
-    document.documentElement.getBoundingClientRect().top,
-    document.documentElement.getBoundingClientRect().bottom,
-    document.documentElement.clientHeight,
-    document.querySelector('footer').offsetTop,
-    tmp
-  );
-  console.dir(document.querySelector('footer'));
+  // console.log(
+  //   document.documentElement.getBoundingClientRect().top,
+  //   document.documentElement.getBoundingClientRect().bottom,
+  //   document.documentElement.clientHeight,
+  //   document.querySelector('footer').offsetTop,
+  //   tmp
+  // );
+  // console.dir(document.querySelector('footer'));
 }
