@@ -50,7 +50,7 @@
 72D:\_DevProject\goit-js-hw-11\node_modules\yaml\dist\warnings-1000a372.js133174887341913012 0
 61D:\_DevProject\goit-js-hw-11\node_modules\lodash\isBoolean.js133174887518075276 0
 38D:\_DevProject\goit-js-hw-11\.cache\4d133170817913218617 1
-39D:\_DevProject\goit-js-hw-11\.gitignore133174883906164744 0
+39D:\_DevProject\goit-js-hw-11\.gitignore133179515115102009 0
 64D:\_DevProject\goit-js-hw-11\node_modules\postcss-calc\README.md133174887256259696 0
 66D:\_DevProject\goit-js-hw-11\node_modules\is-arrayish\package.json133174887166068803 0
 49D:\_DevProject\goit-js-hw-11\src\sass\_reset.scss133171472950545719 0
@@ -415,7 +415,7 @@
 94D:\_DevProject\goit-js-hw-11\node_modules\jsdom\lib\jsdom\living\generated\HTMLOListElement.js133174887432735964 0
 105D:\_DevProject\goit-js-hw-11\node_modules\uncss\node_modules\postcss-selector-parser\dist\__tests__\id.js133174887263039287 0
 59D:\_DevProject\goit-js-hw-11\node_modules\@types\node\ts4.8133174887432805955 1
-59D:\_DevProject\goit-js-hw-11\node_modules\@msgpackr-extract133179367239819712 1
+59D:\_DevProject\goit-js-hw-11\node_modules\@msgpackr-extract133179372989559435 1
 65D:\_DevProject\goit-js-hw-11\node_modules\uuid\lib\md5-browser.js133174887197362144 0
 104D:\_DevProject\goit-js-hw-11\node_modules\htmlnano\docs\versioned_docs\version-1.1.1\010-introduction.md133174887344442862 0
 99D:\_DevProject\goit-js-hw-11\node_modules\lmdb\dependencies\lmdb-data-v1\libraries\liblmdb\mtest5.c133174887371581482 0
