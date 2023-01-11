@@ -80,7 +80,7 @@ export default class DataControler {
       return true;
     }
 
-    if (this.#pageNumber * this.#PER_PAGE >= this.#totalHits) {
+    if (this.#pageNumber * this.#PER_PAGE > this.#totalHits) {
       return true;
     }
 
