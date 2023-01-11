@@ -1,4 +1,5 @@
 .container {
+  position: relative;
   margin: 0 auto;
   max-width: 1200px;
 
@@ -58,16 +59,34 @@
   }
 }
 
-.hidden {
-  display: none;
-}
-
 .search__btn--top .search__btn--down {
 }
 
-.container {
-}
 .gallery {
 }
 .search__footer {
+}
+
+.back-search {
+  position: fixed;
+  bottom: 15px;
+  display: block;
+  height: 32px;
+  width: 32px;
+  border: 1px solid rgb(134, 134, 214);
+  background-color: rgb(134, 134, 214);
+  border-radius: 50%;
+  background-image: url('../images/circle-up.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+
+  right: 15px;
+  @media screen and (min-width: 1262px) {
+    right: calc((100vw - 1262px) / 2);
+  }
+}
+
+.hidden {
+  display: none;
 }

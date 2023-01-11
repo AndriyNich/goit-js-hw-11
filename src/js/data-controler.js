@@ -12,19 +12,20 @@ export default class DataControler {
   #PER_PAGE = 20;
   #totalHits = 0;
   #searchLine = '';
-  #page = 0;
+  #pageNumber = 0;
   #search;
   #isNowFetchActive = false;
+  idx = 0;
 
   constructor() {}
 
   setNewSearch(searchLine) {
-    this.#page = 0;
+    this.#pageNumber = 0;
     this.#searchLine = searchLine.trim().toLowerCase();
-    this.#resetFetchActive();
   }
 
   async loadData() {
+    this.idx += 1;
     if (this.#isNowFetchActive) {
       return false;
     }
@@ -32,16 +33,17 @@ export default class DataControler {
     this.#createSearchLine();
 
     if (!this.#whileNotDataEnd()) {
+      console.log('END');
       return false;
     }
+
+    this.#setFetchActive();
 
     return await this.#fetchData();
   }
 
   async #fetchData() {
     try {
-      this.#setFetchActive();
-
       const result = await axios.get(this.#search);
 
       this.#totalHits = result.data.totalHits;
@@ -57,12 +59,12 @@ export default class DataControler {
     }
   }
 
-  get page() {
-    return this.#page;
+  get pageNumber() {
+    return this.#pageNumber;
   }
 
-  set page(newPage) {
-    this.#page = newPage;
+  set pageNumber(newPage) {
+    this.#pageNumber = newPage;
   }
 
   #setFetchActive() {
@@ -74,34 +76,38 @@ export default class DataControler {
   }
 
   #whileNotDataEnd() {
-    if (this.#page <= 1) {
+    if (this.#pageNumber <= 1) {
       return true;
     }
 
-    if (this.#page * this.#PER_PAGE < this.#totalHits) {
+    if (this.#pageNumber * this.#PER_PAGE >= this.#totalHits) {
       return true;
     }
 
-    notification.sendNotificationInfo('Oops! Data is end.');
     return false;
   }
 
   #sendNotification(cntData) {
     if (cntData === 0) {
       notification.sendNotificationError(ERR_404);
-    } else {
-      if (this.#page === 1) {
-        notification.sendNotificationSuccess(
-          `Hooray! We found ${cntData} images`
-        );
-      }
+    } else if (this.#pageNumber === 1) {
+      notification.sendNotificationSuccess(
+        `Hooray! We found ${cntData} images`
+      );
+    }
+    console.log(this.#pageNumber * this.#PER_PAGE, cntData);
+
+    if (this.#pageNumber * this.#PER_PAGE >= cntData) {
+      notification.sendNotificationInfo('Oops! Data is end.');
     }
   }
 
   #createSearchLine() {
-    this.#page++;
+    this.#pageNumber++;
 
     this.#search = `${this.#URL}?${this.#KEY}&${this.#TYPE}
-      &page=${this.#page}&per_page=${this.#PER_PAGE}&q=${this.#searchLine}`;
+      &page=${this.#pageNumber}&per_page=${this.#PER_PAGE}&q=${
+      this.#searchLine
+    }`;
   }
 }
