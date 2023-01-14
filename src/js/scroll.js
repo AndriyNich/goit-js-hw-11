@@ -22,6 +22,13 @@ export default class MyScroll {
     this.#events.push(obj);
   }
 
+  scrolByTop() {
+    window.scrollBy({
+      top: document.documentElement.getBoundingClientRect().top,
+      behavior: 'smooth',
+    });
+  }
+
   #onScroll(event) {
     const currentY =
       this.#ref.footer.offsetTop +

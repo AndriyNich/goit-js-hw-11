@@ -10,7 +10,6 @@ $shadow-card: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
   justify-content: center;
   gap: $gap;
   padding: $gap 0;
-  scroll-behavior: smooth;
 }
 
 .photo-card {
@@ -21,6 +20,13 @@ $shadow-card: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
   border-radius: 5px;
   overflow: hidden;
   box-shadow: $shadow-card;
+
+  transform: scale(1);
+  transition: transform 250ms linear;
+  &:hover,
+  &:focus {
+    transform: scale(1.025);
+  }
 }
 
 .photo__img {

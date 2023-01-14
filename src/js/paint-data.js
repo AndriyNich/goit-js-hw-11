@@ -13,15 +13,15 @@ export default class PaintData {
     this.#lastData = document.querySelector(cssSelectorLoadLastData);
   }
 
+  clearDataAll() {
+    this.#ref.innerHTML = '';
+    this.#lastData.classList.add('hidden');
+  }
+
   insertDataToEnd(data) {
     this.#ref.insertAdjacentHTML('beforeend', data);
 
     this.#visibleFooter();
-  }
-
-  clearDataAll() {
-    this.#ref.innerHTML = '';
-    this.#lastData.classList.add('hidden');
   }
 
   showInfoLoadEndData() {
