@@ -9,7 +9,7 @@ export default class DataControler {
   #URL = 'https://pixabay.com/api/';
   #KEY = 'key=32660703-81d5f2d1cd5893d94cddf879d';
   #TYPE = 'image_type=photo';
-  #PER_PAGE = 20;
+  #PER_PAGE = 40;
   #totalHits = 0;
   #searchLine = '';
   #pageNumber = 0;
@@ -33,6 +33,8 @@ export default class DataControler {
     }
 
     if (this.#pageNumber >= this.#maxPage) {
+      this.#onShowLastData();
+
       return false;
     }
 
@@ -88,10 +90,6 @@ export default class DataControler {
 
     if (this.#pageNumber == this.#maxPage) {
       notification.sendNotificationInfo('Oops! Load last data.');
-
-      if (typeof this.onLoadLastData === 'function') {
-        this.onLoadLastData();
-      }
     }
   }
 
@@ -101,6 +99,12 @@ export default class DataControler {
     this.#search = `${this.#URL}?${this.#KEY}&${this.#TYPE}
       &page=${this.#pageNumber}&per_page=${this.#PER_PAGE}&q=${
       this.#searchLine
-    }`;
+    }&image_type=photo&orientation=horizontal&safesearch=true`;
+  }
+
+  #onShowLastData() {
+    if (typeof this.onLoadLastData === 'function') {
+      this.onLoadLastData();
+    }
   }
 }
