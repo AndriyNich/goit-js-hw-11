@@ -1,10 +1,16 @@
 export default class PaintData {
   #ref;
   #footer;
+  #lastData;
 
-  constructor(cssSelectorEnterPoint, cssSelectorFooter) {
+  constructor(
+    cssSelectorEnterPoint,
+    cssSelectorFooter,
+    cssSelectorLoadLastData
+  ) {
     this.#ref = document.querySelector(cssSelectorEnterPoint);
     this.#footer = document.querySelector(cssSelectorFooter);
+    this.#lastData = document.querySelector(cssSelectorLoadLastData);
   }
 
   insertDataToEnd(data) {
@@ -15,6 +21,11 @@ export default class PaintData {
 
   clearDataAll() {
     this.#ref.innerHTML = '';
+    this.#lastData.classList.add('hidden');
+  }
+
+  showInfoLoadEndData() {
+    this.#lastData.classList.remove('hidden');
   }
 
   #visibleFooter() {

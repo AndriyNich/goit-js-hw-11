@@ -10,6 +10,7 @@ $shadow-card: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
   justify-content: center;
   gap: $gap;
   padding: $gap 0;
+  scroll-behavior: smooth;
 }
 
 .photo-card {
@@ -17,13 +18,13 @@ $shadow-card: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
   flex-direction: column;
 
   width: $width-img;
-  // height: auto;
   border-radius: 5px;
   overflow: hidden;
   box-shadow: $shadow-card;
 }
 
 .photo__img {
+  display: block;
   width: 100%;
   height: $height-img;
   object-fit: cover;

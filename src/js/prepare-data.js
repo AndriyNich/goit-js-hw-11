@@ -17,8 +17,9 @@ export default class PrepareData {
     } = item;
 
     return `
+        <a href="${bigSrc}">
           <div class="photo-card">
-            <img class="photo__img" src="${src}" alt="${alt}" loading="lazy" />
+            <img class="photo__img" src="${src}" alt="${alt}" loading="lazy"  />
             <div class="info">
               <p class="info__item">
                 <span class="info__title">Likes</span>
@@ -37,6 +38,7 @@ export default class PrepareData {
                 <span class="info__data">${downloads}</span>
               </p>
             </div>
-          </div>`;
+          </div>
+        </a>`;
   }
 }

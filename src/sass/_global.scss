@@ -67,13 +67,30 @@
 .search__footer {
 }
 
+.footer__title {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  width: 120px;
+  padding: 5px 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  border: 1 solid white;
+  border-radius: 5px;
+}
+
+.hidden {
+  display: none;
+}
+
 .back-search {
   position: fixed;
   bottom: 15px;
   display: block;
   height: 32px;
   width: 32px;
-  border: 1px solid rgb(134, 134, 214);
+  // border: 1px solid rgb(134, 134, 214);
   background-color: rgb(134, 134, 214);
   border-radius: 50%;
   background-image: url('../images/circle-up.svg');
@@ -85,8 +102,10 @@
   @media screen and (min-width: 1262px) {
     right: calc((100vw - 1262px) / 2);
   }
-}
 
-.hidden {
-  display: none;
+  opacity: 1;
+  transition: opacity 250ms linear;
+  &.hidden {
+    opacity: 0;
+  }
 }

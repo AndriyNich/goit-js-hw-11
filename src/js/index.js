@@ -1,3 +1,6 @@
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
 import DataControler from './data-controler';
 import PrepareData from './prepare-data';
 import PaintData from './paint-data';
@@ -12,18 +15,22 @@ const refs = {
 };
 
 const prepareData = new PrepareData();
-const paintData = new PaintData('.gallery', 'footer');
-const dataControler = new DataControler();
 const notification = new Notification();
+
+const gallery = new SimpleLightbox('.gallery a', { scrollZoom: false });
+
+const paintData = new PaintData('.gallery', 'footer', '.footer__title');
+const dataControler = new DataControler();
+dataControler.onLoadLastData = paintData.showInfoLoadEndData.bind(paintData);
+
 const myScroll = new MyScroll(refs);
-
 myScroll.addEventListener('call-fetch', onFetch);
-myScroll.addEventListener('top-visible', setBtnBackToSearchHidden);
-myScroll.addEventListener('top-hidden', setBtnBackToSearchVisible);
+myScroll.addEventListener('header-visible', makeBtnBackToSearchAsHidden);
+myScroll.addEventListener('header-hidden', makeBtnBackToSearchAsVisible);
 
-refs.form.addEventListener('submit', onSearch);
+refs.form.addEventListener('submit', onFirstSearch);
 
-function onSearch(event) {
+function onFirstSearch(event) {
   event.preventDefault();
 
   const searchLine = event.target.elements.search.value;
@@ -52,15 +59,17 @@ function onFetchResult(data) {
     paintData.clearDataAll();
   }
 
-  const listPicturesInHtmlString = prepareData.getHtmlSring(data);
+  const listPicturesAsHtmlString = prepareData.getHtmlSring(data);
 
-  paintData.insertDataToEnd(listPicturesInHtmlString);
+  paintData.insertDataToEnd(listPicturesAsHtmlString);
+
+  gallery.refresh();
 }
 
-function setBtnBackToSearchHidden() {
+function makeBtnBackToSearchAsHidden() {
   refs.btnBackToSearch.classList.add('hidden');
 }
 
-function setBtnBackToSearchVisible() {
+function makeBtnBackToSearchAsVisible() {
   refs.btnBackToSearch.classList.remove('hidden');
 }

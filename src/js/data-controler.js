@@ -15,27 +15,28 @@ export default class DataControler {
   #pageNumber = 0;
   #search;
   #isNowFetchActive = false;
-  idx = 0;
+  #maxPage = 1;
+
+  onLoadLastData = '';
 
   constructor() {}
 
   setNewSearch(searchLine) {
     this.#pageNumber = 0;
+    this.#maxPage = 1;
     this.#searchLine = searchLine.trim().toLowerCase();
   }
 
   async loadData() {
-    this.idx += 1;
     if (this.#isNowFetchActive) {
       return false;
     }
 
-    this.#createSearchLine();
-
-    if (!this.#whileNotDataEnd()) {
-      console.log('END');
+    if (this.#pageNumber >= this.#maxPage) {
       return false;
     }
+
+    this.#createSearchLine();
 
     this.#setFetchActive();
 
@@ -47,6 +48,7 @@ export default class DataControler {
       const result = await axios.get(this.#search);
 
       this.#totalHits = result.data.totalHits;
+      this.#maxPage = Math.ceil(this.#totalHits / this.#PER_PAGE);
 
       this.#sendNotification(this.#totalHits);
 
@@ -75,30 +77,21 @@ export default class DataControler {
     this.#isNowFetchActive = false;
   }
 
-  #whileNotDataEnd() {
-    if (this.#pageNumber <= 1) {
-      return true;
-    }
-
-    if (this.#pageNumber * this.#PER_PAGE > this.#totalHits) {
-      return true;
-    }
-
-    return false;
-  }
-
-  #sendNotification(cntData) {
-    if (cntData === 0) {
+  #sendNotification() {
+    if (this.#totalHits === 0) {
       notification.sendNotificationError(ERR_404);
     } else if (this.#pageNumber === 1) {
       notification.sendNotificationSuccess(
-        `Hooray! We found ${cntData} images`
+        `Hooray! We found ${this.#totalHits} images`
       );
     }
-    console.log(this.#pageNumber * this.#PER_PAGE, cntData);
 
-    if (this.#pageNumber * this.#PER_PAGE >= cntData) {
-      notification.sendNotificationInfo('Oops! Data is end.');
+    if (this.#pageNumber == this.#maxPage) {
+      notification.sendNotificationInfo('Oops! Load last data.');
+
+      if (typeof this.onLoadLastData === 'function') {
+        this.onLoadLastData();
+      }
     }
   }
 

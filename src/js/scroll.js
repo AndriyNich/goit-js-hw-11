@@ -2,8 +2,8 @@ import throttle from 'lodash.throttle';
 
 export default class MyScroll {
   #scrollEvent = {
-    TOP_VISIBLE: 'top-visible',
-    TOP_HIDDEN: 'top-hidden',
+    HEADER_VISIBLE: 'header-visible',
+    HEADER_HIDDEN: 'header-hidden',
     CALL_FETCH: 'call-fetch',
   };
 
@@ -34,9 +34,9 @@ export default class MyScroll {
     }
 
     if (this.#isHeaderVisible()) {
-      this.#eventScrollTopVisible();
+      this.#eventScrollHeaderVisible();
     } else {
-      this.#eventScrollTopHidden();
+      this.#eventScrollHeaderHidden();
     }
 
     this.#currentY = currentY;
@@ -55,12 +55,12 @@ export default class MyScroll {
     });
   }
 
-  #eventScrollTopVisible() {
-    this.#CallEvents(this.#scrollEvent.TOP_VISIBLE);
+  #eventScrollHeaderVisible() {
+    this.#CallEvents(this.#scrollEvent.HEADER_VISIBLE);
   }
 
-  #eventScrollTopHidden() {
-    this.#CallEvents(this.#scrollEvent.TOP_HIDDEN);
+  #eventScrollHeaderHidden() {
+    this.#CallEvents(this.#scrollEvent.HEADER_HIDDEN);
   }
 
   #eventScrollCallFetch() {
